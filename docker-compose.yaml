@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  pizza-nginx:
+    image: nginx:latest
+    container_name: pizza-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker-conf/nginx/conf.d/pizza.local.conf:/etc/nginx/conf.d/pizza.local.conf
+      - ./src:/var/www/html
+    depends_on:
+      - pizza-php
+
+  pizza-php:
+    image: php:8.1-fpm
+    container_name: pizza-php
+    volumes:
+      - ./src:/var/www/html

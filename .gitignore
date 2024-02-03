@@ -1,0 +1,10 @@
+.idea
+.vscode
+.DS_Store
+.env
+composer/vendor/**/
+composer/vendor/autoload.php
+composer/bin
+!.gitkeep
+.php_cs.cache
+.php-cs-fixer.cache
