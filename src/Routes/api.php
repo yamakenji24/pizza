@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use App\Router\Router;
+use App\Routes\Router;
 
 return function (string $path): void {
     $router = new Router($path);
