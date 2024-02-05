@@ -1,21 +1,13 @@
 <?php declare(strict_types=1);
 
+use App\Controller\ApiController;
 use App\Routes\Router;
 
-return function (string $path): void {
-    $router = new Router($path);
 
-    $router->addRoute('/api', function () {
-        echo 'APIのページです';
-    });
+return function (string $path, string $method): void {
+    $router = new Router($path, $method);
 
-    $router->addRoute('/api/users', function () {
-        echo 'ユーザー一覧のページです';
-    });
-
-    $router->addRoute('/api/users/1', function () {
-        echo 'ユーザー詳細のページです';
-    });
+    $router->addRoute('GET', '/api', ApiController::class);
 
     $router->resolve();
 };
