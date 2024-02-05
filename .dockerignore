@@ -1,0 +1,13 @@
+.git/
+.idea/
+.github/
+README.md
+vendor/
+*Dockerfile
+.DS_Store
+.dockerignore
+.gitignore
+.gitmodules
+docker-conf
+Makefile
+docker-compose.yaml
