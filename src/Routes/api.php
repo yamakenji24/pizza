@@ -2,12 +2,17 @@
 
 use App\Controller\ApiController;
 use App\Routes\Router;
+use GuzzleHttp\Psr7\ServerRequest;
 
+return function (): void {
+    $request = ServerRequest::fromGlobals();
 
-return function (string $path, string $method): void {
-    $router = new Router($path, $method);
+    $router = new Router();
 
     $router->addRoute('GET', '/api', ApiController::class);
 
-    $router->resolve();
+    $response = $router->resolve($request);
+
+    http_response_code($response->getStatusCode());
+    echo $response->getBody();
 };
