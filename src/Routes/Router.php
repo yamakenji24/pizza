@@ -26,7 +26,12 @@ class Router
         $handler = $this->routes[$method][$route] ?? null;
 
         if ($handler) {
-            return $handler($request);
+            if (is_string($handler) && class_exists($handler)) {
+                $class = new $handler();
+                return $class($request);
+            } else {
+                return $handler($request);
+            }
         } else {
             return new Response(404, [], 'Not found');
         }

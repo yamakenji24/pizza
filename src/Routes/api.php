@@ -9,10 +9,7 @@ return function (): void {
 
     $router = new Router();
 
-    $router->addRoute('GET', '/api', function($request) {
-        $controller = new ApiController();
-        return $controller($request);
-    });
+    $router->addRoute('GET', '/api', ApiController::class);
 
     $response = $router->resolve($request);
 
