@@ -11,5 +11,7 @@
             "email": "yamakenji24@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/psr7": "^2.6"
+    }
 }
