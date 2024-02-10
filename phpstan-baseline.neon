@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property App\\\\Routes\\\\Router\\:\\:\\$routes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Routes/Router.php
