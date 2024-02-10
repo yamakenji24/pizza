@@ -8,6 +8,9 @@ use GuzzleHttp\Psr7\Response;
 
 class Router
 {
+    /**
+     * @var array<string, array<string, callable|string>>
+     */
     private array $routes = [];
 
     public function __construct()
