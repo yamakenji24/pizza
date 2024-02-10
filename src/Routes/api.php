@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use App\Controller\ApiController;
+use App\Controller\ApiPostController;
 use App\Routes\Router;
 use GuzzleHttp\Psr7\ServerRequest;
 
@@ -10,6 +11,7 @@ return function (): void {
     $router = new Router();
 
     $router->addRoute('GET', '/api', ApiController::class);
+    $router->addRoute('POST', '/api', ApiPostController::class);
 
     $response = $router->resolve($request);
 
