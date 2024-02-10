@@ -13,5 +13,16 @@
     ],
     "require": {
         "guzzlehttp/psr7": "^2.6"
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
     }
 }
