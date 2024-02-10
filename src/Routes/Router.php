@@ -2,11 +2,15 @@
 
 namespace App\Routes;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use GuzzleHttp\Psr7\Response;
+
 class Router
 {
     private array $routes = [];
 
-    public function __construct(private string $method, private string $route)
+    public function __construct()
     {
     }
 
@@ -15,23 +19,16 @@ class Router
         $this->routes[$method][$route] = $handler;
     }
 
-    public function resolve(): void {
+    public function resolve(ServerRequestInterface $request): ResponseInterface {
+        $method = $request->getMethod();
+        $route = $request->getUri()->getPath();
         // Find the handler for the current method and route
-        $handler = $this->routes[$this->method][$this->route] ?? null;
+        $handler = $this->routes[$method][$route] ?? null;
 
         if ($handler) {
-            if (is_string($handler) && class_exists($handler)) {
-                $handler = new $handler();
-            }
-            if (is_callable($handler)) {
-                call_user_func($handler);
-            } else {
-                throw new \Exception("Handler is not callable");
-            }
+            return $handler($request);
         } else {
-            // No handler found for the current method and route
-            http_response_code(404);
-            echo "Not found";
+            return new Response(404, [], 'Not found');
         }
     }
 }
