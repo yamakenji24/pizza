@@ -2,13 +2,15 @@
 
 use App\Controller\ApiController;
 use App\Controller\ApiPostController;
+use App\Container\Container;
 use App\Routes\Router;
 use GuzzleHttp\Psr7\ServerRequest;
 
 return function (): void {
     $request = ServerRequest::fromGlobals();
-
-    $router = new Router();
+    
+    $container = new Container();
+    $router = new Router($container);
 
     $router->addRoute('GET', '/api', ApiController::class);
     $router->addRoute('POST', '/api', ApiPostController::class);
