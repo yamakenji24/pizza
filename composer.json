@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "guzzlehttp/psr7": "^2.6"
+        "guzzlehttp/psr7": "^2.6",
+        "psr/container": "^2.0"
     },
     "scripts": {
         "test": "phpunit",
