@@ -8,11 +8,8 @@ use App\Application\Sample\SampleUseCase;
 
 class ServiceProvider
 {
-    private $container;
-
-    public function __construct(Container $container)
+    public function __construct(private Container $container)
     {
-        $this->container = $container;
     }
 
     public function register(): void

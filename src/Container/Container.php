@@ -8,10 +8,10 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class Container implements ContainerInterface
 {
-    private $services = [];
-    private $factories = [];
-    private $arguments = [];
-    private $currentServiceId = null;
+    private mixed $services = [];
+    private mixed $factories = [];
+    private mixed $arguments = [];
+    private ?string $currentServiceId = null;
 
 
     public function get($id)
@@ -32,7 +32,7 @@ class Container implements ContainerInterface
         return isset($this->services[$id]) || isset($this->factories[$id]);
     }
 
-    public function add($id): self
+    public function add(string $id): self
     {
         if ($this->has($id)) {
             throw new class("Service already exists: $id") extends \Exception implements ContainerExceptionInterface {};
