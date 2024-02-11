@@ -2,12 +2,11 @@
 
 namespace App\Routes;
 
-use App\Controller\ApiController;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use GuzzleHttp\Psr7\Response;
 use App\Container\Container;
-use App\Application\Sample\SampleUseCase;
+use App\Container\ServiceProvider;
 
 class Router
 {
@@ -42,7 +41,7 @@ class Router
     }
 
     private function addServiceProvider(): void {
-        $this->container->add(ApiController::class)->addArgument(SampleUseCase::class);
-        $this->container->add(SampleUseCase::class);
+        $serviceProvider = new ServiceProvider($this->container);
+        $serviceProvider->register();
     }
 }
