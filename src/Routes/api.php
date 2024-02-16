@@ -12,7 +12,10 @@ return function (): void {
     $container = new Container();
     $router = new Router($container);
 
-    $router->addRoute('GET', '/api', ApiController::class);
+    $router->group('/api', function ($router) {
+        $router->addRoute('GET', '/', ApiController::class);
+    });
+
     $router->addRoute('POST', '/api', ApiPostController::class);
 
     $response = $router->resolve($request);
