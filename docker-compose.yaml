@@ -19,6 +19,27 @@ services:
       context: .
       dockerfile: docker-conf/php-fpm/Dockerfile
     container_name: pizza-php
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ./public:/var/www/html/public
       - ./src:/var/www/html/src
+
+  pizza-mysql:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: pizza-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker-conf/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./docker-conf/mysql/data:/var/lib/mysql
+    restart: always
