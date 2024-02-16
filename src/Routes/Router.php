@@ -14,14 +14,24 @@ class Router
      * @var array<string, array<string, callable|string>>
      */
     private array $routes = [];
+    private string $groupPrefix = '';
 
     public function __construct(private Container $container)
     {
         $this->addServiceProvider();
     }
 
+    public function group(string $prefix, callable $callback): void {
+        $currentGroupPrefix = $this->groupPrefix;
+        $this->groupPrefix = $currentGroupPrefix . $prefix;
+        $callback($this);
+        $this->groupPrefix = $currentGroupPrefix;
+    }
+
     public function addRoute(string $method, string $route, mixed $handler): void {
-        $this->routes[$method][$route] = $handler;
+        $path = rtrim($this->groupPrefix . $route, '/');
+        $this->routes[$method][$path] = $handler;
+        $this->routes[$method][$path . '/'] = $handler;
     }
 
     public function resolve(ServerRequestInterface $request): ResponseInterface {
