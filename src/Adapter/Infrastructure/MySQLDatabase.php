@@ -22,14 +22,14 @@ class MySQLDatabase
         }
     }
 
-    public function query(string $sql, array $params = []): array
+    public function query(string $sql, mixed $params = []): mixed
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function execute(string $sql, array $params = []): bool
+    public function execute(string $sql, mixed $params = []): bool
     {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($params);

@@ -14,12 +14,18 @@ class AccountRepositoryImpl
         $this->db = $connection->getConnection();
     }
 
+    /**
+     * @return array{id: int, username: string, password: string}|null
+     */
     public function findById(int $id): ?array
     {
         $result = $this->db->query('SELECT * FROM account WHERE id = :id', ['id' => $id]);
         return $result[0] ?? null;
     }
 
+    /**
+     * @param array{id: int, username: string, password: string} $account
+     */
     public function put(array $account): bool
     {
         return $this->db->execute('INSERT INTO account (id, username, password) VALUES (:id, :username, :password) ON DUPLICATE KEY UPDATE username = :username', $account);
