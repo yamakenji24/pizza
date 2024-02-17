@@ -2,6 +2,8 @@
 
 namespace App\Container;
 
+use App\Adapter\Account\AccountRepositoryImpl;
+use App\Adapter\Infrastructure\MySQLConnection;
 use App\Container\Container;
 use App\Controller\ApiController;
 use App\Application\Sample\SampleUseCase;
@@ -15,6 +17,10 @@ class ServiceProvider
     public function register(): void
     {
         $this->container->add(ApiController::class)->addArgument(SampleUseCase::class);
-        $this->container->add(SampleUseCase::class);
+        
+        // ここはInterfaceを使うべき
+        $this->container->add(SampleUseCase::class)->addArgument(AccountRepositoryImpl::class);
+        $this->container->add(AccountRepositoryImpl::class)->addArgument(MySQLConnection::class);
+        $this->container->add(MySQLConnection::class);
     }
 }

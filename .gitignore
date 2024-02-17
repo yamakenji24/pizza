@@ -7,3 +7,4 @@
 .php-cs-fixer.cache
 /vendor/
 .phpunit.cache
+docker-conf/mysql/data

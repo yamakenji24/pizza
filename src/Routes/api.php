@@ -13,7 +13,7 @@ return function (): void {
     $router = new Router($container);
 
     $router->group('/api', function ($router) {
-        $router->addRoute('GET', '/', ApiController::class);
+        $router->addRoute('GET', '/account', ApiController::class);
     });
 
     $router->addRoute('POST', '/api', ApiPostController::class);
