@@ -4,6 +4,8 @@ services:
   pizza-nginx:
     image: nginx:latest
     container_name: pizza-nginx
+    depends_on:
+      - pizza-php
     ports:
       - "80:80"
     volumes:
@@ -11,22 +13,25 @@ services:
       - ./docker-conf/nginx/conf.d/pizza.local.conf:/etc/nginx/conf.d/pizza.local.conf
       - ./public:/var/www/html/public
       - ./src:/var/www/html/src
-    depends_on:
-      - pizza-php
+    networks:
+      - pizza-network
 
   pizza-php:
     build: 
       context: .
       dockerfile: docker-conf/php-fpm/Dockerfile
     container_name: pizza-php
+    depends_on:
+      - pizza-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - ./public:/var/www/html/public
-      - ./src:/var/www/html/src
+      - ./:/var/www/html/
+    networks:
+      - pizza-network
 
   pizza-mysql:
     image: mysql:5.7
@@ -42,4 +47,7 @@ services:
     volumes:
       - ./docker-conf/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./docker-conf/mysql/data:/var/lib/mysql
-    restart: always
+    networks:
+      - pizza-network
+networks:
+  pizza-network:
