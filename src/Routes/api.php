@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-use App\Controller\ApiController;
-use App\Controller\ApiPostController;
 use App\Container\Container;
+use App\Controller\User\GetCurrentUserController;
 use App\Routes\Router;
 use GuzzleHttp\Psr7\ServerRequest;
 
@@ -12,11 +11,9 @@ return function (): void {
     $container = new Container();
     $router = new Router($container);
 
-    $router->group('/api', function ($router) {
-        $router->addRoute('GET', '/account', ApiController::class);
+    $router->group('/api/user', function ($router) {
+        $router->addRoute('GET', '/', GetCurrentUserController::class);
     });
-
-    $router->addRoute('POST', '/api', ApiPostController::class);
 
     $response = $router->resolve($request);
 

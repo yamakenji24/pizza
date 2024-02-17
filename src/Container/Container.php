@@ -32,13 +32,14 @@ class Container implements ContainerInterface
         return isset($this->services[$id]) || isset($this->factories[$id]);
     }
 
-    public function add(string $id): self
+    public function add(string $id, string $concrete = null): self
     {
         if ($this->has($id)) {
             throw new class("Service already exists: $id") extends \Exception implements ContainerExceptionInterface {};
         }
         $this->currentServiceId = $id;
-        $this->factories[$id] = fn() => new $id(...array_map(fn($arg) => $this->get($arg), $this->arguments[$id] ?? []));
+        $concrete = $concrete ?? $id;
+        $this->factories[$id] = fn() => new $concrete(...array_map(fn($arg) => $this->get($arg), $this->arguments[$id] ?? []));
         return $this;
     }
     public function addArgument(string $argument): self

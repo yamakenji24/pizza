@@ -6,7 +6,7 @@ use App\Adapter\Account\AccountRepositoryImpl;
 
 class SampleUseCase
 {
-    public function __construct(private AccountRepositoryImpl $accountRepositoryImpl) {}
+    public function __construct(private readonly AccountRepositoryImpl $accountRepositoryImpl) {}
 
     public function execute(): string
     {
