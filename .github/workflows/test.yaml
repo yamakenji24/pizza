@@ -17,7 +17,16 @@ jobs:
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-        run: docker compose up -d
+        run: |
+          docker compose up -d
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..30}; do
+            if docker exec pizza-mysql mysqladmin ping -h127.0.0.1 --silent; then
+              break
+            fi
+            sleep 1
+          done
+
 
       - name: Install dependencies
         run: docker compose exec -T pizza-php composer install
@@ -26,9 +35,4 @@ jobs:
         run: docker compose exec -T pizza-php composer phpstan
 
       - name: Run tests
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
         run: docker compose exec -T pizza-php composer test
