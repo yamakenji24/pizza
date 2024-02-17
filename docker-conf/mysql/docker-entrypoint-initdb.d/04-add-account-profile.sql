@@ -1,0 +1,1 @@
+INSERT INTO account_profile (account_id, username, bio, image) VALUES (1, 'pizza user', 'This is pizza bio', '');
