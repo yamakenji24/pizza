@@ -11,16 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
+      - name: Setup Docker
+        run: docker-compose up -d
 
       - name: Install dependencies
-        run: composer install
+        run: docker compose exec -T pizza-php composer install
 
-      - name: Run PHPUnit tests
-        run: composer test
+      - name: Run tests
+        run: docker compose exec -T pizza-php composer test
+        env:
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       
       - name: Run PhpStan
-        run: composer phpstan
+        run: docker compose exec -T pizza-php composer phpstan

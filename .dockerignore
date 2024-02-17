@@ -8,6 +8,8 @@ vendor/
 .dockerignore
 .gitignore
 .gitmodules
+.github
+
 docker-conf
 Makefile
 docker-compose.yaml
