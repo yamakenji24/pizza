@@ -5,19 +5,13 @@ namespace Test\Adapter\User;
 use App\Adapter\Infrastructure\MySQLConnection;
 use App\Adapter\User\UserRepositoryImpl;
 use PHPUnit\Framework\TestCase;
-use Dotenv\Dotenv;
 
 class UserRepositoryImplTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../../');
-        $dotenv->load();
-    }
     /**
      * @test
      */
-    public function findById_Userを取得することができる()
+    public function findById_Userを取得することができる(): void
     {
         $connection = new MySQLConnection();
         $userRepository = new UserRepositoryImpl($connection);
@@ -30,7 +24,7 @@ class UserRepositoryImplTest extends TestCase
     /**
      * @test
      */
-    public function findById_Userが存在しない場合は例外を投げる()
+    public function findById_Userが存在しない場合は例外を投げる(): void
     {
         $this->assertTrue(true);
     }
