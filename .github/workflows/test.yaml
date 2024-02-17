@@ -17,7 +17,12 @@ jobs:
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-        run: docker compose up -d
+        run: |
+          docker compose up -d
+          echo "Waiting for MySQL to be ready..."
+          while ! docker exec pizza-mysql mysqladmin ping -h127.0.0.1 --silent; do
+            sleep 1
+          done
 
       - name: Install dependencies
         run: docker compose exec -T pizza-php composer install
