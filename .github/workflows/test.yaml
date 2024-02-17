@@ -23,6 +23,7 @@ jobs:
           while ! docker exec pizza-mysql mysqladmin ping -h127.0.0.1 --silent; do
             sleep 1
           done
+          
 
       - name: Install dependencies
         run: docker compose exec -T pizza-php composer install
