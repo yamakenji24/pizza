@@ -18,7 +18,7 @@ class UserRepositoryImpl implements UserRepository
 
     public function findById(int $account_id): ?User
     {
-        $sql = 'SELECT a.id, a.email, a_p.username, a_p.bio, a_p.image 
+        $sql = 'SELECT a.id, a.email, a.password, a_p.username, a_p.bio, a_p.image 
                 FROM account a
                 LEFT JOIN account_profile a_p ON a.id = a_p.account_id 
                 WHERE a.id = :id';
@@ -26,13 +26,38 @@ class UserRepositoryImpl implements UserRepository
         $result = $this->db->query($sql, $params);
 
         if (empty($result)) {
-            return null;
+            throw new \Exception('User not found');
         }
         
         $account = $result[0];
         return new User(
             $account['id'],
             $account['username'],
+            $account['password'],
+            $account['email'],
+            $account['bio'],
+            $account['image']
+        );
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        $sql = 'SELECT a.id, a.email, a.password, a_p.username, a_p.bio, a_p.image 
+                FROM account a
+                LEFT JOIN account_profile a_p ON a.id = a_p.account_id 
+                WHERE a.email = :email';
+        $params = ['email' => $email];
+        $result = $this->db->query($sql, $params);
+
+        if (empty($result)) {
+            throw new \Exception('User not found');
+        }
+
+        $account = $result[0];
+        return new User(
+            $account['id'],
+            $account['username'],
+            $account['password'],
             $account['email'],
             $account['bio'],
             $account['image']

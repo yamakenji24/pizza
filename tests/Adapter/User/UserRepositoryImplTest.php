@@ -28,4 +28,33 @@ class UserRepositoryImplTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    /**
+     * @test
+     */
+    public function findByEmail_Userを取得することができる(): void
+    {
+        $email = 'sample_user@pizza.com';
+        $connection = new MySQLConnection();
+        $userRepository = new UserRepositoryImpl($connection);
+
+        $user = $userRepository->findByEmail($email);
+
+        $this->assertNotNull($user);
+        $this->assertEquals($email, $user->getEmail());
+    }
+
+    /**
+     * @test
+     */
+    public function findByEmail_Userが存在しない場合は例外を投げる(): void
+    {
+        $email = '';
+        $connection = new MySQLConnection();
+        $userRepository = new UserRepositoryImpl($connection);
+
+        $this->expectException(\Exception::class);
+
+        $userRepository->findByEmail($email);
+    }
 }

@@ -1,1 +1,1 @@
-INSERT INTO account (id, email, password) VALUES (1, 'sample_user@pizza.com', 'pizza_password');
+INSERT INTO account (id, email, password) VALUES (1, 'sample_user@pizza.com', '$2y$10$PZrg2Ix78VtRNqFC73x0jeUxhMW.aXgGCjesP3ts0KTaJESO1ksi6');
