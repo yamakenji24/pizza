@@ -6,7 +6,7 @@ use Firebase\JWT\JWT;
 
 class TokenRepository
 {
-    private $algorithm;
+    private string $algorithm;
 
     public function __construct()
     {
