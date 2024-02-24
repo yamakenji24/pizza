@@ -4,6 +4,7 @@ namespace App\Adapter\User;
 
 use App\Adapter\Infrastructure\MySQLConnection;
 use App\Adapter\Infrastructure\MySQLDatabase;
+use App\Domain\User\InvalidUserAuthenticateException;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
@@ -16,7 +17,10 @@ class UserRepositoryImpl implements UserRepository
         $this->db = $connection->getConnection();
     }
 
-    public function findById(int $account_id): ?User
+    /**
+     * @throws InvalidUserAuthenticateException
+     */
+    public function findById(int $account_id): User
     {
         $sql = 'SELECT a.id, a.email, a.password, a_p.username, a_p.bio, a_p.image 
                 FROM account a
@@ -26,7 +30,7 @@ class UserRepositoryImpl implements UserRepository
         $result = $this->db->query($sql, $params);
 
         if (empty($result)) {
-            throw new \Exception('User not found');
+            throw new InvalidUserAuthenticateException();
         }
         
         $account = $result[0];
@@ -40,7 +44,10 @@ class UserRepositoryImpl implements UserRepository
         );
     }
 
-    public function findByEmail(string $email): ?User
+    /**
+     * @throws InvalidUserAuthenticateException
+     */
+    public function findByEmail(string $email): User
     {
         $sql = 'SELECT a.id, a.email, a.password, a_p.username, a_p.bio, a_p.image 
                 FROM account a
@@ -50,7 +57,7 @@ class UserRepositoryImpl implements UserRepository
         $result = $this->db->query($sql, $params);
 
         if (empty($result)) {
-            throw new \Exception('User not found');
+            throw new InvalidUserAuthenticateException();
         }
 
         $account = $result[0];

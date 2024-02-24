@@ -4,6 +4,7 @@ namespace Test\Adapter\User;
 
 use App\Adapter\Infrastructure\MySQLConnection;
 use App\Adapter\User\UserRepositoryImpl;
+use App\Domain\User\InvalidUserAuthenticateException;
 use PHPUnit\Framework\TestCase;
 
 class UserRepositoryImplTest extends TestCase
@@ -53,7 +54,7 @@ class UserRepositoryImplTest extends TestCase
         $connection = new MySQLConnection();
         $userRepository = new UserRepositoryImpl($connection);
 
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidUserAuthenticateException::class);
 
         $userRepository->findByEmail($email);
     }
