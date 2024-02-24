@@ -9,7 +9,7 @@ https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - [ ] Database Wrapper
 
 ## Endpoint
-- [ ] POST /api/users/login
+- [x] POST /api/users/login
 - [ ] POST /api/users
 - [x] GET /api/user
 - [ ] PUT /api/user
