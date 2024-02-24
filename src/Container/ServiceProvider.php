@@ -4,8 +4,8 @@ namespace App\Container;
 
 use App\Adapter\Account\AccountRepositoryImpl;
 use App\Adapter\Infrastructure\MySQLConnection;
-use App\Container\Container;
 use App\Container\Services\UserServiceProvider;
+use App\Container\Services\UsersServiceProvider;
 use App\Controller\ApiController;
 use App\Application\Sample\SampleUseCase;
 
@@ -18,6 +18,7 @@ class ServiceProvider
     public function register(): void
     {
         (new UserServiceProvider($this->container))->add();
+        (new UsersServiceProvider($this->container))->add();
 
         $this->container->add(ApiController::class)->addArgument(SampleUseCase::class);
         

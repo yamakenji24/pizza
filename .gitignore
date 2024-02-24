@@ -8,3 +8,5 @@
 /vendor/
 .phpunit.cache
 docker-conf/mysql/data
+.phpunit.result.cache
+*.pem
